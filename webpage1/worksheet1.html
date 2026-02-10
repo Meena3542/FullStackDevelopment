@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlyEasy Flash Sale</title>
+
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: sticky;
+            top: 0;
+            background: #0a2540;
+            color: #fff;
+            padding: 15px 30px;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00;
+        }
+
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: none;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 26px;
+            cursor: pointer;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            background: linear-gradient(to right, #1cb5e0, #000046);
+            padding: 40px 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 25px;
+        }
+
+        .cta-btn {
+            background: #ffcc00;
+            color: #000;
+            padding: 15px 35px;
+            font-size: 18px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        /* ===== FEATURES ===== */
+        .features {
+            padding: 60px 30px;
+            background: #f4f6f8;
+        }
+
+        .features h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: #fff;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+        }
+
+        /* ===== PRICING ===== */
+        .pricing {
+            padding: 60px 30px;
+            background: #ffffff;
+        }
+
+        .pricing h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .pricing-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .plan {
+            border: 1px solid #ddd;
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .plan:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .plan h3 {
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #0a2540;
+        }
+
+        .plan ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .plan ul li {
+            margin-bottom: 8px;
+        }
+
+        .premium {
+            border: 2px solid #ffcc00;
+            box-shadow: 0 0 15px rgba(255,204,0,0.5);
+            position: relative;
+        }
+
+        .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ffcc00;
+            color: #000;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 20px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #0a2540;
+            color: #fff;
+            padding: 40px 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        footer h4 {
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                background: #0a2540;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                width: 200px;
+                padding: 20px;
+            }
+
+            .menu-toggle:checked + nav ul {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">FlyEasy</div>
+
+            <label for="menu-toggle" class="hamburger">&#9776;</label>
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+
+            <nav>
+                <ul>
+                    <li><a href="#">Deals</a></li>
+                    <li><a href="#">Flights</a></li>
+                    <li><a href="#">Hotels</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div>
+            <h1>50% Off Asia Flights This Week</h1>
+            <p>Limited-time flash sale. Book now before seats run out!</p>
+            <a href="#" class="cta-btn">Book Now</a>
+        </div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="features">
+        <h2>Why Fly with FlyEasy?</h2>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Non-Stop Routes</h3>
+                <p>Direct flights to major Asian destinations.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Free Meals & Baggage</h3>
+                <p>Enjoy complimentary meals and baggage allowance.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Flexible Booking</h3>
+                <p>Easy rescheduling and cancellation policies.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PRICING ===== -->
+    <section class="pricing">
+        <h2>Choose Your Fare</h2>
+
+        <div class="pricing-container">
+            <div class="plan">
+                <h3>Economy Fare</h3>
+                <div class="price">₹9,999</div>
+                <ul>
+                    <li>Standard seating</li>
+                    <li>Cabin baggage</li>
+                    <li>Basic support</li>
+                </ul>
+            </div>
+
+            <div class="plan premium">
+                <div class="badge">Recommended</div>
+                <h3>Premium Comfort</h3>
+                <div class="price">₹14,999</div>
+                <ul>
+                    <li>Extra legroom</li>
+                    <li>Meals & baggage</li>
+                    <li>Priority boarding</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h4>Contact Us</h4>
+                <p>International Airport, India</p>
+                <p>📞 +91 98765 43210</p>
+                <p>✉️ support@flyeasy.com</p>
+            </div>
+
+            <div>
+                <h4>Follow Us</h4>
+                <p>Twitter | Facebook | Instagram</p>
+            </div>
+
+            <div>
+                <h4>Trusted Airline</h4>
+                <p>Certified & Safe Travel</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
