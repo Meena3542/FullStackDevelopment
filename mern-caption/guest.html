@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guest Mode</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .box {
+      background: white;
+      color: black;
+      padding: 30px;
+      border-radius: 12px;
+      width: 350px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #185a9d;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0d3c6e;
+    }
+
+    img {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Guest Mode</h2>
+  <p>Upload image to generate caption (limit: 2)</p>
+
+  <input type="file" id="image"><br><br>
+
+  <img id="preview" style="display:none;" />
+
+  <button onclick="generate()">Generate Caption</button>
+
+  <p id="result"></p>
+</div>
+
+<script>
+async function generate() {
+
+  let count = localStorage.getItem("guestCount") || 0;
+  count = parseInt(count);
+
+  // 🚫 LIMIT CHECK
+  if (count >= 2) {
+    alert("⚠️ Limit reached! Please register.");
+    window.location.href = "register.html";
+    return;
+  }
+
+  const fileInput = document.getElementById("image");
+
+  if (!fileInput.files[0]) {
+    alert("Please select an image");
+    return;
+  }
+
+  // 🖼 IMAGE PREVIEW
+  const preview = document.getElementById("preview");
+  preview.src = URL.createObjectURL(fileInput.files[0]);
+  preview.style.display = "block";
+
+  const formData = new FormData();
+  formData.append("image", fileInput.files[0]);
+
+  try {
+    // 🔥 API CALL TO BACKEND
+    const res = await fetch("http://127.0.0.1:5000/api/caption", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+
+    console.log(data); // debug
+
+    // ✅ DISPLAY CAPTION
+    if (data.caption) {
+      document.getElementById("result").innerText = data.caption;
+    } else {
+      document.getElementById("result").innerText = "No caption generated";
+    }
+
+    // 🔢 INCREMENT COUNT
+    count++;
+    localStorage.setItem("guestCount", count);
+
+  } catch (error) {
+    console.log("ERROR:", error);
+    alert("Error generating caption");
+  }
+}
+</script>
+
+</body>
+</html>
